@@ -1,6 +1,6 @@
 # Relatedness between HA1 residues in historic relative to contemporary influenza A(H3N2) viruses
 
-[Link] (https://tindale.shinyapps.io/influenza_relatedness/) to interactive influenza heatmap.
+[Link](https://tindale.shinyapps.io/influenza_relatedness/) to interactive influenza heatmap.
 
 ## Heatmaps by influenza subtype
 
