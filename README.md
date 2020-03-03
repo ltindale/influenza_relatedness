@@ -1,5 +1,7 @@
 # Relatedness between HA1 residues in historic relative to contemporary influenza A(H3N2) viruses
 
+[Link] (https://tindale.shinyapps.io/influenza_relatedness/) to interactive influenza heatmap.
+
 ## Heatmaps by influenza subtype
 
 Heatmap of historic-contemporary match scores. The historic AA is the the most frequent AA for each combination of year and AA position. The contemporary AA is the current variant consensus sequence at the same position.
