@@ -6,6 +6,7 @@ library(tidyverse)
 library(plotly)
 library(DT)
 
+#read in heatmap data
 data1 <- read.csv("Cohort_Analysis_Heatmap_Data_normalized_comparison.csv")
 data1$Year <- factor(data1$Year)
 data1$Position <- factor(data1$Position)
@@ -20,6 +21,13 @@ colnames(data1)[which(colnames(data1) == 'MatchScore_Historic_vs_3a')] <- '3C.3a
 colnames(data1)[which(colnames(data1) == 'MatchScore_Historic_vs_IVR.186')] <- '3C.2a1_IVR-186'
 colnames(data1)[which(colnames(data1) == 'BlendedMatchScore_2a1b.131K')] <- '3C.2a1b_131K + 3C.2a1_IVR-186'
 colnames(data1)[which(colnames(data1) == 'BlendedMatchScore_3a')] <- '3C.3a + 3C.2a1_IVR-186'
+
+#read in bargraph data
+bardata <- read.csv("Cohort_Analysis_Histogram_Data.csv", header = TRUE)
+
+bsub <- na_if(bardata, 'Unknown (X)') #change "Unknown (X)" values to NA
+bsub <- na.exclude(bsub) #exclude NA
+colnames(bsub) <- sub("X", "AA", colnames(bsub)) #remove "X" from start of column names
 
 
 ########################################
@@ -45,6 +53,13 @@ ui <- navbarPage(
            selectInput('typeInput2', 'Influenza subtype:', names(data1[c("3C.2a1b_131K + 3C.2a1_IVR-186", "3C.3a + 3C.2a1_IVR-186")])),
            radioButtons('AAoptions2', 'HA1 residues to show:', choices = list('All', 'Koel positions')),
            plotlyOutput('plot2', width ='850px', height = '400px')
+  ),
+  
+  tabPanel(title = 'Historic amino acids',
+           tags$h1('Relatedness between HA1 residues in historic relative to contemporary influenza A(H3N2) viruses'),
+           selectInput('typeInput3', 'Amino acid residue:', names(bsub[c("AA133", "AA135", "AA145", "AA155", "AA156", "AA158", "AA159", "AA189", "AA193")])),
+           plotlyOutput('bargraph', width ='850px', height = '400px')
+  
 #  ),
   
 #  tabPanel(title = 'Data',
@@ -79,6 +94,11 @@ server <- function(input, output) {
       Koel
     }
   })
+  
+  bar_input <- reactive({
+    input$typeInput3
+  })
+  
   
   output$plot1 <- renderPlotly({
     p1 <- ggplot(AA1(), aes(x = Year, y = Position, fill = AA1()[[input$typeInput1]],
@@ -131,6 +151,23 @@ server <- function(input, output) {
     ggplotly(p2, tooltip = 'text')
     
   })
+  
+  output$bargraph <- renderPlotly({
+    bargraph <- bsub %>% 
+      ggplot(aes(as.factor(Year),fill = bar_input())) +
+      geom_bar(position="fill") +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1,size = 10)) +
+      xlab("Year") +
+      ylab("Percent of GISAID Sequences") +
+      ggtitle(label = input$typeInput3) +
+      scale_y_continuous(labels = scales::percent_format())
+    
+    ggplotly(bargraph)
+    
+  })  
+  
+  
+  
   
   #remove intermediate data columns
 #  subset <- select(data1, -'MatchScore_2a1b.131K_vs_IVR.186', -'MatchScore_3a_vs_IVR.186')

@@ -14,14 +14,16 @@ library(viridis)
 ```{r data}
 bardata <- read.csv("influenza_relatedness/Cohort_Analysis_Histogram_Data.csv", header = TRUE)
 
-bsub <- subset(bardata != 'Unknown (X)')
+bsub <- na_if(bardata, 'Unknown (X)') #change "Unknown (X)" values to NA
+bsub <- na.exclude(bsub) #exclude NA
+colnames(bsub) <- sub("X", "AA", colnames(bsub)) #remove "X" from start of column names
 
 ```
 
 ```{r bar graph}
 
 bsub %>% 
-  ggplot(aes(as.factor(Year),fill=X133)) +
+  ggplot(aes(as.factor(Year),fill=AA133)) +
   geom_bar(position="fill") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1,size = 10)) +
   xlab("Year") +

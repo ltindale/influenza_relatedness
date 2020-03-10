@@ -10,6 +10,8 @@ library(DataExplorer)
 library(skimr)
 
 bardata <- read.csv("influenza_relatedness/Cohort_Analysis_Histogram_Data.csv", header = TRUE)
+bsub <- na_if(bardata, 'Unknown (X)') #change Unknown (X) values to NA
+
 
 ```
 
@@ -22,6 +24,7 @@ bardata %>%
   summary() %>% 
   skim()
 
-#create_report(bardata)
+create_report(bardata)
+create_report(bsub)
 
 ```
