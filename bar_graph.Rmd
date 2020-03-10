@@ -1,0 +1,31 @@
+---
+title: "bar_graph"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(viridis)
+
+```
+
+
+```{r data}
+bardata <- read.csv("influenza_relatedness/Cohort_Analysis_Histogram_Data.csv", header = TRUE)
+
+bsub <- subset(bardata != 'Unknown (X)')
+
+```
+
+```{r bar graph}
+
+bsub %>% 
+  ggplot(aes(as.factor(Year),fill=X133)) +
+  geom_bar(position="fill") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1,size = 10)) +
+  xlab("Year") +
+  ylab("Percent of GISAID Sequences") +
+  scale_y_continuous(labels = scales::percent_format())
+  
+```

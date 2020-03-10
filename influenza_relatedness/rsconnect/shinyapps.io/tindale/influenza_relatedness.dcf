@@ -1,0 +1,12 @@
+name: influenza_relatedness
+title: influenza_relatedness
+username:
+account: tindale
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1897618
+bundleId: 2848386
+url: https://tindale.shinyapps.io/influenza_relatedness/
+when: 1583271311.30995
+asMultiple: FALSE
+asStatic: FALSE

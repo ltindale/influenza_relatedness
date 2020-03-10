@@ -1,0 +1,27 @@
+---
+title: "Testing"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(DataExplorer)
+library(skimr)
+
+bardata <- read.csv("influenza_relatedness/Cohort_Analysis_Histogram_Data.csv", header = TRUE)
+
+```
+
+
+
+```{r explore data}
+
+bardata %>% 
+  glimpse() %>% 
+  summary() %>% 
+  skim()
+
+#create_report(bardata)
+
+```
