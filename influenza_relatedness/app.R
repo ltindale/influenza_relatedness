@@ -58,8 +58,8 @@ ui <- navbarPage(
   tabPanel(title = 'Historic amino acids',
            tags$h1('Relatedness between HA1 residues in historic relative to contemporary influenza A(H3N2) viruses'),
            selectInput('typeInput3', 'Amino acid residue:', names(bsub[c("AA133", "AA135", "AA145", "AA155", "AA156", "AA158", "AA159", "AA189", "AA193")])),
-           plotlyOutput('bargraph', width ='850px', height = '400px')
-#           verbatimTextOutput("head")
+           plotlyOutput('bargraph', width ='850px', height = '460px')
+#           verbatimTextOutput("table")
   
 #  ),
   
@@ -154,18 +154,21 @@ server <- function(input, output) {
                             text = paste(" Year: ", Year,
                                          "<br> Amino acid residue: ", bsub[[input$typeInput3]]))) +
       geom_bar(position="fill") +
-      theme(axis.text.x = element_text(angle = 60, hjust = 1,size = 8)) +
+      theme(axis.text.x = element_text(angle = 60, hjust = 1,size = 6.5)) +
       xlab("Year") +
       ylab("Percent of GISAID Sequences") +
       ggtitle(label = input$typeInput3) +
+      labs(fill = "Amino acid") + #tile fill legend label
       scale_y_continuous(labels = scales::percent_format())
     
     ggplotly(bargraph, tooltip = "text")
     
   })  
   
-#  output$head <- renderPrint({
-#    head(bsub)
+#  output$table <- renderPrint({
+#    bsub %>% 
+#     #group_by(Year) %>% 
+#     table("AA133")
 #  })
   
   

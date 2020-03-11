@@ -5,8 +5,8 @@ account: tindale
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1897618
-bundleId: 2848386
+bundleId: 2869347
 url: https://tindale.shinyapps.io/influenza_relatedness/
-when: 1583271311.30995
+when: 1583881006.20721
 asMultiple: FALSE
 asStatic: FALSE
